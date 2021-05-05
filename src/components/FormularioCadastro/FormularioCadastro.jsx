@@ -6,22 +6,34 @@ export class FormularioCadastro extends Component {
     super(props);
     this.titulo = '';
     this.texto = '';
+    this.state = {
+      titulo: '',
+      texto: '',
+    };
   }
 
   _handleMudancaTitulo(event) {
     event.stopPropagation();
-    this.titulo = event.target.value;
+    this.setState({
+      titulo: event.target.value,
+    });
   }
 
   _handleMudancaTexto(event) {
     event.stopPropagation();
-    this.texto = event.target.value;
+    this.setState({
+      texto: event.target.value,
+    });
   }
 
   _criarNota(event) {
     event.preventDefault();
     event.stopPropagation();
-    this.props.criarNota(this.titulo, this.texto);
+    this.setState({
+      titulo: '',
+      texto: '',
+    });
+    this.props.criarNota(this.state.titulo, this.state.texto);
   }
 
   render() {
@@ -30,12 +42,14 @@ export class FormularioCadastro extends Component {
         <input
           type="text"
           placeholder="Título"
+          value={this.state.titulo}
           className="form-cadastro_input"
           onChange={this._handleMudancaTitulo.bind(this)}
         />
         <textarea
           rows={15}
           placeholder="Escreva sua nota..."
+          value={this.state.texto}
           className="form-cadastro_input"
           onChange={this._handleMudancaTexto.bind(this)}
         />
