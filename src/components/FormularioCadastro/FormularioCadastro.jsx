@@ -9,6 +9,7 @@ export class FormularioCadastro extends Component {
     this.state = {
       titulo: '',
       texto: '',
+      categoria: 'Sem Categoria',
     };
   }
 
@@ -26,19 +27,40 @@ export class FormularioCadastro extends Component {
     });
   }
 
+  _handleMudancaCategoria(event) {
+    event.stopPropagation();
+    this.setState({
+      categoria: event.target.value,
+    });
+  }
+
   _criarNota(event) {
     event.preventDefault();
     event.stopPropagation();
     this.setState({
       titulo: '',
       texto: '',
+      categoria: 'Sem Categoria',
     });
-    this.props.criarNota(this.state.titulo, this.state.texto);
+    this.props.criarNota(
+      this.state.titulo,
+      this.state.texto,
+      this.state.categoria
+    );
   }
 
   render() {
     return (
       <form className="form-cadastro " onSubmit={this._criarNota.bind(this)}>
+        <select
+          className="form-cadastro-input"
+          onChange={this._handleMudancaCategoria.bind(this)}
+        >
+          <option>Sem Categoria</option>
+          {this.props.categorias.map((categoria, index) => {
+            return <option>{categoria}</option>;
+          })}
+        </select>
         <input
           type="text"
           placeholder="Título"

@@ -3,13 +3,23 @@ import './listaDeCategorias.css';
 
 export class ListaDeCategorias extends Component {
   _handleEventoInput(e) {
-    if (e.key === 'Enter') console.log('test');
+    if (e.key === 'Enter') {
+      const valorCategoria = e.target.value;
+      e.target.value = '';
+      this.props.adicionarCategoria(valorCategoria);
+    }
   }
   render() {
     return (
       <section className="lista-categorias">
         <ul className="lista-categorias_lista">
-          <li className="lista-categorias_item">Categorias</li>
+          {this.props.categorias.map((categoria, index) => {
+            return (
+              <li key={index} className="lista-categorias_item">
+                {categoria}
+              </li>
+            );
+          })}
         </ul>
         <input
           className="lista-categorias_input"
